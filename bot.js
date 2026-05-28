@@ -7,7 +7,7 @@ const client = new Client({
 const TOKEN ="MTUwOTQ2NDg4NzYyNDA3NzQyMg.GibZ-k.lLV8zfAPG9qzv6CEvVL0wZBlXQ0twDd21Q1r-s";
 
 // API URL
-const API = "http://localhost:3000";
+const API = "https://dicord-key-bot.onrender.com";
 
 client.once("ready", () => {
     console.log(`${client.user.tag} online`);
