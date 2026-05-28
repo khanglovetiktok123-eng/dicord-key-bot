@@ -13,25 +13,25 @@ const client = new Client({
 const TOKEN = process.env.TOKEN;
 
 client.once("ready", () => {
-    console.log(`${client.user.tag} online`);
+    console.log(`${client.user.tag} is now online`);
 });
 
 client.on("interactionCreate", async interaction => {
 
     if (!interaction.isChatInputCommand()) return;
 
-    // /menu
+    // Handle /menu command
     if (interaction.commandName === "menu") {
 
         const row = new ActionRowBuilder().addComponents(
             new ButtonBuilder()
-                .setLabel("MỞ MENU")
+                .setLabel("OPEN MENU")
                 .setStyle(ButtonStyle.Link)
                 .setURL("https://raw.githack.com/khanglovetiktok123-eng/dicord-key-bot/main/menu.html")
         );
 
         return interaction.reply({
-            content: "🚀 MENU H5GG",
+            content: "🚀 H5GG MENU",
             components: [row]
         });
     }
