@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nhat khang ios</title>
+
+<style>
+:root{
+--menu-width:400px;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Segoe UI",sans-serif;
+}
+
+body{
+background:transparent;
+overflow:hidden;
+}
+
+/* TAB TRÒN */
+#floatingTab{
+width:85px;
+height:85px;
+
+border-radius:50%;
+overflow:hidden;
+
+position:fixed;
+top:120px;
+left:20px;
+
+z-index:99999;
+
+cursor:grab;
+
+border:3px solid #ff2b2b;
+
+box-shadow:
+0 0 18px rgba(255,0,0,0.7),
+0 0 40px rgba(255,0,0,0.4);
+
+user-select:none;
+}
+
+#floatingTab img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* MENU */
+#mainMenu{
+position:fixed;
+top:220px;
+left:20px;
+
+z-index:9999;
+
+display:none;
+}
+
+/* VIỀN */
+.menu-border{
+padding:3px;
+
+border-radius:30px;
+
+background:linear-gradient(
+135deg,
+#ff2b2b,
+#111,
+#ff2b2b
+);
+
+background-size:300% 300%;
+
+animation:borderGlow 5s linear infinite;
+
+box-shadow:
+0 0 18px rgba(255,0,0,0.35),
+0 0 45px rgba(255,0,0,0.18);
+}
+
+@keyframes borderGlow{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+/* MENU */
+.menu{
+width:var(--menu-width);
+
+border-radius:28px;
+
+overflow:hidden;
+
+color:white;
+
+position:relative;
+
+background:rgba(0,0,0,0.38);
+
+backdrop-filter:blur(15px);
+
+border:1px solid rgba(255,255,255,0.05);
+}
+
+/* BACKGROUND */
+.background{
+position:absolute;
+inset:0;
+
+background:url("https://hanaminikata.com/image/1502088830084190238/d651563a53a3247e.webp")
+center/cover no-repeat;
+
+filter:brightness(0.55) blur(1px);
+
+transform:scale(1.06);
+
+z-index:0;
+}
+
+.overlay{
+position:absolute;
+inset:0;
+
+background:rgba(0,0,0,0.38);
+
+z-index:1;
+}
+
+/* CONTENT */
+.tabs,
+.tab-content,
+label{
+position:relative;
+z-index:2;
+}
+
+/* TAB */
+.tabs{
+display:flex;
+
+background:rgba(10,10,10,0.72);
+
+border-bottom:
+1px solid rgba(255,255,255,0.06);
+}
+
+.tabs button{
+flex:1;
+
+padding:14px;
+
+border:none;
+
+background:transparent;
+
+color:#d4d4d4;
+
+font-size:17px;
+font-weight:700;
+
+cursor:pointer;
+
+transition:0.2s;
+}
+
+.tabs button.active{
+color:#00c3ff;
+
+border-bottom:
+2px solid #00c3ff;
+
+text-shadow:
+0 0 12px rgba(0,195,255,0.7);
+}
+
+/* CONTENT */
+.tab-content{
+padding:18px;
+display:none;
+}
+
+.tab-content.active{
+display:block;
+}
+
+/* LABEL */
+label{
+display:flex;
+align-items:center;
+
+gap:10px;
+
+margin:12px 0;
+
+padding:12px 14px;
+
+border-radius:16px;
+
+background:
+rgba(255,255,255,0.05);
+
+border:
+1px solid rgba(255,255,255,0.05);
+
+transition:0.25s;
+}
+
+label:hover{
+transform:scale(1.01);
+
+background:
+rgba(255,255,255,0.09);
+}
+
+input[type="checkbox"]{
+width:18px;
+height:18px;
+}
+
+/* NÚT X */
+.closeBtn{
+position:absolute;
+
+top:8px;
+right:8px;
+
+z-index:999;
+
+width:32px;
+height:32px;
+
+border:none;
+border-radius:50%;
+
+background:#ff1e1e;
+
+color:white;
+
+font-size:18px;
+font-weight:bold;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+cursor:pointer;
+
+box-shadow:
+0 0 12px rgba(255,0,0,0.6);
+
+transition:0.2s;
+}
+
+/* KEY SYSTEM */
+#keyBox{
+position:fixed;
+inset:0;
+
+z-index:999999;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,0.55);
+
+backdrop-filter:blur(8px);
+}
+
+.key-container{
+width:300px;
+
+padding:22px;
+
+border-radius:22px;
+
+background:rgba(30,30,30,0.92);
+
+border:1px solid rgba(255,255,255,0.08);
+
+box-shadow:
+0 0 30px rgba(0,0,0,0.6);
+
+text-align:center;
+}
+
+.key-container h1{
+color:white;
+font-size:28px;
+
+margin-bottom:5px;
+}
+
+.key-container p{
+color:#00ffe1;
+
+font-size:14px;
+
+margin-bottom:18px;
+
+line-height:1.7;
+}
+
+#keyInput{
+width:100%;
+
+height:45px;
+
+border:none;
+outline:none;
+
+padding:0 14px;
+
+border-radius:10px;
+
+background:#111;
+
+color:white;
+
+font-size:15px;
+
+margin-bottom:18px;
+}
+
+.key-container button{
+width:100%;
+
+height:45px;
+
+border:none;
+
+border-radius:10px;
+
+background:#00ff55;
+
+color:black;
+
+font-size:18px;
+font-weight:bold;
+
+cursor:pointer;
+}
+
+#status{
+margin-top:14px;
+
+font-size:16px;
+
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<!-- KEY -->
+<div id="keyBox">
+
+<div class="key-container">
+
+<h1>nhat khang ios</h1>
+
+<p>
+Vui lòng nhập key!<br>
+</p>
+
+<input
+type="password"
+id="keyInput"
+placeholder="Enter your Key"
+/>
+
+<button onclick="checkKey()">
+Verify
+</button>
+
+<div id="status">
+<span style="color:#ff2b2b;">30s</span>
+</div>
+
+</div>
+</div>
+
+<!-- TAB -->
+<div id="floatingTab">
+<img src="https://hanaminikata.com/image/1502088830084190238/e4e0f0b6f6e73a75.webp">
+</div>
+
+<!-- MENU -->
+<div id="mainMenu">
+
+<div class="menu-border">
+<div class="menu">
+
+<div class="background"></div>
+<div class="overlay"></div>
+
+<button class="closeBtn" onclick="toggleMenu()">×</button>
+
+<div class="tabs">
+<button class="tab-btn active" data-tab="aimbot">Tab Aim</button>
+<button class="tab-btn" data-tab="misc">Tab Mod</button>
+<button class="tab-btn" data-tab="info">Tab Info</button>
+</div>
+
+<!-- AIM -->
+<div id="aimbot" class="tab-content active">
+
+<label>
+<input type="checkbox" onchange="hscu(this)">
+ʜs ᴄᴜ
+</label>
+
+<label>
+<input type="checkbox" onchange="speedx2(this)">
+sᴘᴇᴇᴅ x2
+</label>
+
+<label>
+<input type="checkbox" onchange="speedx8(this)">
+sᴘᴇᴇᴅ x8
+</label>
+
+<label>
+<input type="checkbox" onclick="danthang()">
+ɴᴏʀᴇᴄᴏɪʟ
+</label>
+
+<label>
+<input type="checkbox" onclick="magic(this)">
+ᴍᴀɢɪᴄ ʙᴜʟʟᴇᴛ
+</label>
+
+</div>
+
+<!-- MOD -->
+<div id="misc" class="tab-content">
+
+<label>
+<input type="checkbox">
+AntiBand
+</label>
+
+<label>
+<input type="checkbox" onclick="ak()">
+AK LV7
+</label>
+
+<label>
+<input type="checkbox" onclick="xm8()">
+XM8 LV7
+</label>
+
+<label>
+<input type="checkbox" onclick="ump()">
+UMP LV7
+</label>
+
+<label>
+<input type="checkbox" onclick="an94()">
+AN94 LV7
+</label>
+
+<label>
+<input type="checkbox" onclick="mp40lv7()">
+MP40 LV7
+</label>
+
+<label>
+<input type="checkbox" onclick="mp40lv8()">
+MP40 LV8
+</label>
+
+<label>
+<input type="checkbox" onclick="m1014()">
+M1014 LV8
+</label>
+
+<label>
+<input type="checkbox" onclick="m1887()">
+M1887 LV7
+</label>
+
+</div>
+
+<!-- INFO -->
+<div id="info" class="tab-content">
+Zalo: 0833080373<br>
+Admin: @khangloveios
+</div>
+
+</div>
+</div>
+</div>
+
+<script>
+/* TAB */
+const tabs=document.querySelectorAll(".tab-btn");
+const contents=document.querySelectorAll(".tab-content");
+
+tabs.forEach(btn=>{
+btn.onclick=()=>{
+tabs.forEach(b=>b.classList.remove("active"));
+contents.forEach(c=>c.classList.remove("active"));
+
+btn.classList.add("active");
+
+document.getElementById(btn.dataset.tab)
+.classList.add("active");
+};
+});
+
+/* MENU */
+const floatingTab=document.getElementById("floatingTab");
+const mainMenu=document.getElementById("mainMenu");
+
+function toggleMenu(){
+
+if(mainMenu.style.display==="block"){
+mainMenu.style.display="none";
+}else{
+
+mainMenu.style.display="block";
+
+mainMenu.style.left=
+floatingTab.offsetLeft+"px";
+
+mainMenu.style.top=
+(floatingTab.offsetTop+95)+"px";
+}
+}
+
+floatingTab.addEventListener("click",toggleMenu);
+
+/* DRAG */
+let isDragging=false;
+let offsetX,offsetY;
+
+floatingTab.addEventListener("touchstart",(e)=>{
+isDragging=true;
+
+offsetX=
+e.touches[0].clientX-floatingTab.offsetLeft;
+
+offsetY=
+e.touches[0].clientY-floatingTab.offsetTop;
+});
+
+document.addEventListener("touchmove",(e)=>{
+if(!isDragging) return;
+
+floatingTab.style.left=
+(e.touches[0].clientX-offsetX)+"px";
+
+floatingTab.style.top=
+(e.touches[0].clientY-offsetY)+"px";
+
+mainMenu.style.left=
+floatingTab.offsetLeft+"px";
+
+mainMenu.style.top=
+(floatingTab.offsetTop+95)+"px";
+});
+
+document.addEventListener("touchend",()=>{
+isDragging=false;
+});
+
+/* KEY */
+const adKey="@khangloveios";
+const freeKey="khangiosfree";
+
+/* TIMER */
+let countdown=30;
+
+const timer=setInterval(()=>{
+
+countdown--;
+
+document.getElementById("status").innerHTML=
+"<span style='color:#ff2b2b;'>"+countdown+"s</span>";
+
+if(countdown<=0){
+
+clearInterval(timer);
+
+document.body.innerHTML="";
+
+alert("Hết thời gian nhập key!");
+
+window.close();
+}
+
+},1000);
+
+/* CHECK */
+function checkKey(){
+
+let input=
+document.getElementById("keyInput").value;
+
+if(
+input===adKey ||
+input===freeKey
+){
+
+clearInterval(timer);
+
+document.getElementById("status").innerHTML=
+"<span style='color:#00ff55;'>Đăng nhập thành công</span>";
+
+setTimeout(()=>{
+
+document.getElementById("keyBox")
+.style.display="none";
+
+},800);
+
+}else{
+
+document.getElementById("status").innerHTML=
+"<span style='color:#ff2b2b;'>Đăng nhập thất bại</span>";
+}
+}
+
+/* ========================= */
+/* H5GG GỐC */
+/* ========================= */
+
+function ak(){
+alert("AK LV7");
+if(typeof h5gg !== "undefined"){
+h5gg.searchNumber("909000001","I32","0x100000000","0x160000000");
+h5gg.editAll("909000063","I32");
+}
+}
+
+function xm8(){
+alert("XM8 LV7");
+if(typeof h5gg !== "undefined"){
+h5gg.editAll("909000085","I32");
+}
+}
+
+function ump(){
+alert("UMP LV7");
+if(typeof h5gg !== "undefined"){
+h5gg.editAll("909000098","I32");
+}
+}
+
+function an94(){
+alert("AN94 LV7");
+if(typeof h5gg !== "undefined"){
+h5gg.editAll("909035012","I32");
+}
+}
+
+function mp40lv7(){
+alert("MP40 LV7");
+if(typeof h5gg !== "undefined"){
+h5gg.editAll("909000075","I32");
+}
+}
+
+function mp40lv8(){
+alert("MP40 LV8");
+if(typeof h5gg !== "undefined"){
+h5gg.editAll("909040010","I32");
+}
+}
+
+function m1014(){
+alert("M1014 LV8");
+if(typeof h5gg !== "undefined"){
+h5gg.editAll("909039011","I32");
+}
+}
+
+function m1887(){
+alert("M1887 LV7");
+if(typeof h5gg !== "undefined"){
+h5gg.editAll("909035007","I32");
+}
+}
+
+function hscu(input){
+if(input.checked){
+h5gg.clearResults();
+h5gg.searchNumber('96688289','I32','0x100000000','0x200000000');
+h5gg.editAll('2018908708','I32');
+alert("ʜs ᴄᴜ ᴏɴ");
+}else{
+h5gg.clearResults();
+h5gg.searchNumber('2018908708','I32','0x100000000','0x200000000');
+h5gg.editAll('96688289','I32');
+alert("ʜs ᴄᴜ ᴏғғ");
+}
+}
+
+function speedx2(input){
+if(input.checked){
+h5gg.clearResults();
+h5gg.searchNumber('4397530849764387586','I64','0x100000000','0x200000000');
+h5gg.editAll('4397530849758414897','I64');
+
+h5gg.searchNumber('1','F32','0x100000000','0x160000000');
+h5gg.editAll('2','F32');
+
+alert("sᴘᴇᴇᴅ x2 ᴏɴ");
+}else{
+alert("sᴘᴇᴇᴅ x2 ᴏғғ");
+}
+}
+
+function speedx8(input){
+if(input.checked){
+h5gg.clearResults();
+h5gg.searchNumber('4397530849764387586','I64','0x100000000','0x200000000');
+h5gg.editAll('4397530849757180000','I64');
+
+h5gg.searchNumber('1','F32','0x100000000','0x160000000');
+h5gg.editAll('2','F32');
+
+alert("sᴘᴇᴇᴅ x8 ᴏɴ");
+}else{
+alert("sᴘᴇᴇᴅ x8 ᴏғғ");
+}
+}
+
+function magic(input){
+if(input.checked){
+h5gg.clearResults();
+h5gg.searchNumber('4333543704410193920','I64','0x100000000','0x160000000');
+h5gg.searchNearby('0.01','F32','0x8');
+h5gg.searchNearby('0.0219~0.02975','F32','0x32');
+h5gg.searchNearby('0.1035~0.1070','F32','0x4');
+h5gg.searchNearby('2.802597e-45','F32','0x4');
+h5gg.searchNumber('0.1035~0.1070','F32','0x100000000','0x160000000');
+h5gg.editAll('1.875',"F32");
+
+alert("Magic Bullet On");
+
+}else{
+alert("Chức Năng Này Ko Thể Tắt");
+}
+}
+
+function danthang(){
+if(window.h5gg){
+h5gg.clearResults();
+h5gg.searchNumber('1016018816','I32','0x100000000','0x160000000');
+h5gg.editAll('180','I32');
+}
+alert("ɴᴏʀᴇᴄᴏɪʟ ᴏɴ");
+}
+</script>
+
+</body>
+</html>
