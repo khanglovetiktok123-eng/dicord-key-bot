@@ -13,7 +13,7 @@ client.once("ready", () => {
     console.log(`${client.user.tag} online`);
 });
 
-client.on("if (interaction.commandName === "menu") {
+client.on("interactionCreate", async interaction => {
 
     const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 
