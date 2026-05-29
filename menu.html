@@ -576,7 +576,11 @@ const res = await fetch(
 
 const keys = await res.json();
 
-if(keys.includes(input)){
+const valid = keys.find(
+k => k.key === input
+);
+
+if(valid){
 
 document.getElementById("status")
 .innerHTML =
