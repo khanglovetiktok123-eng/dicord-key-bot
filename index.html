@@ -61,30 +61,43 @@ button{
     font-size:16px;
     font-weight:bold;
     cursor:pointer;
+    transition:0.2s;
 }
 
-/* BAN */
+/* BAN KEY */
 
 .ban{
     background:black;
     color:white;
 }
 
-/* DELETE */
+.ban:hover{
+    background:#222;
+}
+
+/* DELETE KEY */
 
 .delete{
     background:red;
     color:white;
 }
 
-/* CREATE */
+.delete:hover{
+    background:#cc0000;
+}
+
+/* CREATE KEY */
 
 .create{
     background:#00cc66;
     color:white;
 }
 
-/* CHECK */
+.create:hover{
+    background:#00aa55;
+}
+
+/* CHECK KEY */
 
 .check{
     background:linear-gradient(
@@ -143,15 +156,13 @@ Kết quả sẽ hiện ở đây
 
 <script>
 
-const api = "https://discord-key-bot.onrender.com";
+const api = "https://dicord-key-bot.onrender.com";
 
 async function createKey(){
 
     const key = document.getElementById("key").value;
 
-    const res = await fetch(`${api}/create/${key}`);
-
-    const data = await res.json();
+    await fetch(`${api}/create/${key}`);
 
     document.getElementById("result").innerHTML =
     "✅ Đã tạo key: " + key;
@@ -161,9 +172,7 @@ async function deleteKey(){
 
     const key = document.getElementById("key").value;
 
-    const res = await fetch(`${api}/delete/${key}`);
-
-    const data = await res.json();
+    await fetch(`${api}/delete/${key}`);
 
     document.getElementById("result").innerHTML =
     "🗑️ Đã xóa key: " + key;
@@ -196,7 +205,6 @@ async function checkKey(){
 
         document.getElementById("result").innerHTML =
         "❌ Key không hợp lệ";
-
     }
 }
 
