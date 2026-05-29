@@ -82,7 +82,30 @@ button:hover{
 }
 </style>
 </head>
+<script>
+const api = "https://discord-key-bot.onrender.com";
 
+async function createKey() {
+    let key = document.querySelector("input").value;
+
+    let res = await fetch(`${api}/create/${key}`);
+    let data = await res.json();
+
+    alert(data.message || "Tạo key thành công");
+}
+
+async function checkKey() {
+    let key = document.querySelector("input").value;
+
+    let res = await fetch(`${api}/check/${key}`);
+    let data = await res.json();
+
+    alert(data.message);
+}
+
+document.querySelectorAll("button")[0].onclick = createKey;
+document.querySelectorAll("button")[3].onclick = checkKey;
+</script>
 <body>
 
 <div class="panel">
