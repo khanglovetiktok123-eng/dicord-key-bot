@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Discord Key System</title>
+
+<title>Discord System</title>
 
 <style>
 
@@ -16,24 +17,28 @@
 
 body{
     background:#0f172a;
+    color:white;
     display:flex;
     justify-content:center;
     align-items:center;
     min-height:100vh;
-    color:white;
+    padding:20px;
 }
 
 .panel{
-    width:400px;
+    width:100%;
+    max-width:450px;
     background:#1e293b;
-    padding:25px;
     border-radius:20px;
+    padding:25px;
+    box-shadow:0 0 20px rgba(0,0,0,0.5);
 }
 
 h1{
     text-align:center;
     margin-bottom:20px;
     color:#38bdf8;
+    font-size:45px;
 }
 
 input{
@@ -41,9 +46,10 @@ input{
     padding:14px;
     border:none;
     border-radius:12px;
+    margin-top:10px;
     background:#334155;
     color:white;
-    margin-bottom:10px;
+    font-size:16px;
 }
 
 button{
@@ -94,11 +100,12 @@ button{
     color:white;
 }
 
-#result{
+.result{
     margin-top:20px;
     background:#0f172a;
     padding:15px;
     border-radius:12px;
+    min-height:60px;
 }
 
 </style>
@@ -128,7 +135,7 @@ CREATE KEY
 CHECK KEY
 </button>
 
-<div id="result">
+<div class="result" id="result">
 Kết quả sẽ hiện ở đây
 </div>
 
@@ -137,8 +144,6 @@ Kết quả sẽ hiện ở đây
 <script>
 
 const api = "https://discord-key-bot.onrender.com";
-
-/* CREATE */
 
 async function createKey(){
 
@@ -149,10 +154,8 @@ async function createKey(){
     const data = await res.json();
 
     document.getElementById("result").innerHTML =
-    data.message;
+    "✅ Đã tạo key: " + key;
 }
-
-/* DELETE */
 
 async function deleteKey(){
 
@@ -163,24 +166,18 @@ async function deleteKey(){
     const data = await res.json();
 
     document.getElementById("result").innerHTML =
-    data.message;
+    "🗑️ Đã xóa key: " + key;
 }
-
-/* BAN */
 
 async function banKey(){
 
     const key = document.getElementById("key").value;
 
-    const res = await fetch(`${api}/ban/${key}`);
-
-    const data = await res.json();
+    await fetch(`${api}/delete/${key}`);
 
     document.getElementById("result").innerHTML =
-    data.message;
+    "⛔ Đã ban key: " + key;
 }
-
-/* CHECK */
 
 async function checkKey(){
 
@@ -190,8 +187,17 @@ async function checkKey(){
 
     const data = await res.json();
 
-    document.getElementById("result").innerHTML =
-    data.message;
+    if(data.success){
+
+        document.getElementById("result").innerHTML =
+        "✅ Key hợp lệ";
+
+    }else{
+
+        document.getElementById("result").innerHTML =
+        "❌ Key không hợp lệ";
+
+    }
 }
 
 </script>
