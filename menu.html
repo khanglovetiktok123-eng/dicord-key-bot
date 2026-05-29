@@ -48,6 +48,8 @@ box-shadow:
 0 0 40px rgba(88,101,242,0.4);
 
 user-select:none;
+
+display:none;
 }
 
 #floatingTab img{
@@ -71,23 +73,27 @@ display:none;
 /* BORDER */
 
 .menu-border{
-padding:3px;
+padding:5px;
 
-border-radius:30px;
+border-radius:18px;
+
+display:inline-block;
 
 background:linear-gradient(
-135deg,
-#5865F2,
-#111,
-#5865F2
+90deg,
+#0b0b0b 0%,
+#0b0b0b 20%,
+#ff2b2b 30%,
+#0b0b0b 50%,
+#ff2b2b 70%,
+#0b0b0b 100%
 );
 
-background-size:300% 300%;
+background-size:300% 100%;
 
-animation:borderGlow 5s linear infinite;
+animation:borderGlow 4s linear infinite;
 
-box-shadow:
-0 0 18px rgba(88,101,242,0.4);
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
 }
 
 @keyframes borderGlow{
@@ -96,39 +102,33 @@ box-shadow:
 100%{background-position:0% 50%;}
 }
 
-/* MENU */
-
 .menu{
 width:var(--menu-width);
 
-border-radius:28px;
+border-radius:12px;
 
 overflow:hidden;
 
-color:white;
+color:#fff;
 
 position:relative;
 
-background:rgba(0,0,0,0.4);
+box-shadow:inset 0 0 0 1px rgba(0,0,0,0.6);
 
-backdrop-filter:blur(15px);
+background:rgba(0,0,0,0.45);
 }
 
-/* BG */
-
-.background{
+.menu .background{
 position:absolute;
 inset:0;
 
 background:url("https://hanaminikata.com/image/1502088830084190238/d651563a53a3247e.webp")
-center/cover no-repeat;
-
-filter:brightness(0.55);
+center / cover no-repeat;
 
 z-index:0;
 }
 
-.overlay{
+.menu .overlay{
 position:absolute;
 inset:0;
 
@@ -136,8 +136,6 @@ background:rgba(0,0,0,0.45);
 
 z-index:1;
 }
-
-/* CONTENT */
 
 .tabs,
 .tab-content,
@@ -150,37 +148,34 @@ z-index:2;
 
 .tabs{
 display:flex;
-
-background:rgba(0,0,0,0.65);
+background:rgba(17,17,17,0.85);
 }
 
 .tabs button{
 flex:1;
 
-padding:14px;
+padding:12px;
 
 border:none;
 
 background:transparent;
 
-color:#ddd;
-
-font-size:16px;
-font-weight:bold;
-
 cursor:pointer;
+
+font-weight:600;
+
+color:#bdbdbd;
 }
 
 .tabs button.active{
 color:#00c3ff;
-
 border-bottom:2px solid #00c3ff;
 }
 
 /* CONTENT */
 
 .tab-content{
-padding:18px;
+padding:16px;
 display:none;
 }
 
@@ -194,21 +189,11 @@ label{
 display:flex;
 align-items:center;
 
-gap:10px;
+margin:10px 0;
 
-margin:12px 0;
+gap:8px;
 
-padding:12px 14px;
-
-border-radius:16px;
-
-background:rgba(255,255,255,0.05);
-
-transition:0.2s;
-}
-
-label:hover{
-background:rgba(255,255,255,0.1);
+cursor:pointer;
 }
 
 input[type="checkbox"]{
@@ -216,33 +201,7 @@ width:18px;
 height:18px;
 }
 
-/* CLOSE */
-
-.closeBtn{
-position:absolute;
-
-top:8px;
-right:8px;
-
-z-index:999;
-
-width:32px;
-height:32px;
-
-border:none;
-border-radius:50%;
-
-background:red;
-
-color:white;
-
-font-size:18px;
-font-weight:bold;
-
-cursor:pointer;
-}
-
-/* LOGIN KEY */
+/* LOGIN */
 
 #keyBox{
 position:fixed;
@@ -332,10 +291,30 @@ margin-top:15px;
 font-weight:bold;
 }
 
-/* HIDE MENU */
+/* CLOSE */
 
-.hidden{
-display:none;
+.closeBtn{
+position:absolute;
+
+top:8px;
+right:8px;
+
+z-index:999;
+
+width:32px;
+height:32px;
+
+border:none;
+border-radius:50%;
+
+background:red;
+
+color:white;
+
+font-size:18px;
+font-weight:bold;
+
+cursor:pointer;
 }
 
 </style>
@@ -343,15 +322,15 @@ display:none;
 
 <body>
 
-<!-- KEY LOGIN -->
+<!-- LOGIN -->
 
 <div id="keyBox">
 
 <div class="key-container">
 
-<h1>NHAT KHANG IOS</h1>
+<h1>nhat khang ios</h1>
 
-<p>Nhập key Discord để mở menu</p>
+<p>Vui lòng nhập key</p>
 
 <input
 type="password"
@@ -372,7 +351,7 @@ VERIFY
 
 <!-- FLOAT -->
 
-<div id="floatingTab" class="hidden">
+<div id="floatingTab">
 <img src="https://hanaminikata.com/image/1502088830084190238/e4e0f0b6f6e73a75.webp">
 </div>
 
@@ -381,6 +360,7 @@ VERIFY
 <div id="mainMenu">
 
 <div class="menu-border">
+
 <div class="menu">
 
 <div class="background"></div>
@@ -390,17 +370,11 @@ VERIFY
 
 <div class="tabs">
 
-<button class="tab-btn active" data-tab="aimbot">
-Tab Aim
-</button>
+<button class="tab-btn active" data-tab="aimbot">aim</button>
 
-<button class="tab-btn" data-tab="misc">
-Tab Mod
-</button>
+<button class="tab-btn" data-tab="misc">mod</button>
 
-<button class="tab-btn" data-tab="info">
-Info
-</button>
+<button class="tab-btn" data-tab="info">Info</button>
 
 </div>
 
@@ -410,27 +384,27 @@ Info
 
 <label>
 <input type="checkbox" onchange="hscu(this)">
-HS CU
+ʜs ᴄᴜ
 </label>
 
 <label>
 <input type="checkbox" onchange="speedx2(this)">
-SPEED X2
+sᴘᴇᴇᴅ x2
 </label>
 
 <label>
 <input type="checkbox" onchange="speedx8(this)">
-SPEED X8
+sᴘᴇᴇᴅ x8
 </label>
 
 <label>
 <input type="checkbox" onclick="danthang()">
-NORECOIL
+ɴᴏʀᴇᴄᴏɪʟ
 </label>
 
 <label>
 <input type="checkbox" onclick="magic(this)">
-MAGIC BULLET
+ᴍᴀɢɪᴄ ʙᴜʟʟᴇᴛ
 </label>
 
 </div>
@@ -484,7 +458,8 @@ M1887 LV7
 <!-- INFO -->
 
 <div id="info" class="tab-content">
-Discord Key System Active
+Zalo: 0833080373<br>
+Admin: @khangloveios
 </div>
 
 </div>
@@ -499,7 +474,9 @@ const tabs=document.querySelectorAll(".tab-btn");
 const contents=document.querySelectorAll(".tab-content");
 
 tabs.forEach(btn=>{
+
 btn.onclick=()=>{
+
 tabs.forEach(b=>b.classList.remove("active"));
 contents.forEach(c=>c.classList.remove("active"));
 
@@ -507,13 +484,18 @@ btn.classList.add("active");
 
 document.getElementById(btn.dataset.tab)
 .classList.add("active");
+
 };
+
 });
 
 /* MENU */
 
-const floatingTab=document.getElementById("floatingTab");
-const mainMenu=document.getElementById("mainMenu");
+const floatingTab=
+document.getElementById("floatingTab");
+
+const mainMenu=
+document.getElementById("mainMenu");
 
 function toggleMenu(){
 
@@ -532,9 +514,10 @@ mainMenu.style.top=
 (floatingTab.offsetTop+95)+"px";
 
 }
+
 }
 
-floatingTab.addEventListener("click",toggleMenu);
+floatingTab.onclick=toggleMenu;
 
 /* DRAG */
 
@@ -572,43 +555,31 @@ mainMenu.style.top=
 });
 
 document.addEventListener("touchend",()=>{
+
 isDragging=false;
+
 });
 
 /* DISCORD KEY */
 
-let validKeys=[];
+async function checkKey(){
 
-async function loadKeys(){
+let input =
+document.getElementById("keyInput")
+.value.trim();
 
 try{
 
-const res=await fetch(
+const res = await fetch(
 "https://dicord-key-bot.onrender.com/keys"
 );
 
-validKeys=await res.json();
+const keys = await res.json();
 
-}catch(e){
+if(keys.includes(input)){
 
-console.log("Load key lỗi");
-
-}
-
-}
-
-loadKeys();
-
-/* CHECK KEY */
-
-function checkKey(){
-
-let input=
-document.getElementById("keyInput").value;
-
-if(validKeys.includes(input.trim())){
-
-document.getElementById("status").innerHTML=
+document.getElementById("status")
+.innerHTML =
 "<span style='color:#00ff55;'>KEY HỢP LỆ</span>";
 
 setTimeout(()=>{
@@ -617,22 +588,29 @@ document.getElementById("keyBox")
 .style.display="none";
 
 document.getElementById("floatingTab")
-.classList.remove("hidden");
+.style.display="block";
 
 },700);
 
 }else{
 
-document.getElementById("status").innerHTML=
+document.getElementById("status")
+.innerHTML =
 "<span style='color:red;'>KEY KHÔNG TỒN TẠI</span>";
 
 }
 
+}catch(e){
+
+document.getElementById("status")
+.innerHTML =
+"<span style='color:red;'>SERVER ERROR</span>";
+
 }
 
-/* ========================= */
-/* H5GG GỐC */
-/* ========================= */
+}
+
+/* H5GG */
 
 function ak(){
 alert("AK LV7");
@@ -692,74 +670,83 @@ h5gg.editAll("909035007","I32");
 }
 
 function hscu(input){
+
 if(input.checked){
+
+if(window.h5gg){
+
 h5gg.clearResults();
-h5gg.searchNumber('96688289','I32','0x100000000','0x200000000');
-h5gg.editAll('2018908708','I32');
-alert("HS ON");
-}else{
-h5gg.clearResults();
-h5gg.searchNumber('2018908708','I32','0x100000000','0x200000000');
-h5gg.editAll('96688289','I32');
-alert("HS OFF");
+
+h5gg.searchNumber(
+'96688289',
+'I32',
+'0x100000000',
+'0x200000000'
+);
+
+h5gg.editAll(
+'2018908708',
+'I32'
+);
+
 }
+
+alert("ʜs ᴄᴜ ᴏɴ");
+
+}else{
+
+alert("ʜs ᴄᴜ ᴏғғ");
+
+}
+
 }
 
 function speedx2(input){
+
 if(input.checked){
-h5gg.clearResults();
-h5gg.searchNumber('4397530849764387586','I64','0x100000000','0x200000000');
-h5gg.editAll('4397530849758414897','I64');
 
-h5gg.searchNumber('1','F32','0x100000000','0x160000000');
-h5gg.editAll('2','F32');
+alert("sᴘᴇᴇᴅ x2 ᴏɴ");
 
-alert("SPEED X2 ON");
 }else{
-alert("SPEED X2 OFF");
+
+alert("sᴘᴇᴇᴅ x2 ᴏғғ");
+
 }
+
 }
 
 function speedx8(input){
+
 if(input.checked){
-h5gg.clearResults();
-h5gg.searchNumber('4397530849764387586','I64','0x100000000','0x200000000');
-h5gg.editAll('4397530849757180000','I64');
 
-h5gg.searchNumber('1','F32','0x100000000','0x160000000');
-h5gg.editAll('2','F32');
+alert("sᴘᴇᴇᴅ x8 ᴏɴ");
 
-alert("SPEED X8 ON");
 }else{
-alert("SPEED X8 OFF");
+
+alert("sᴘᴇᴇᴅ x8 ᴏғғ");
+
 }
+
 }
 
 function magic(input){
+
 if(input.checked){
-h5gg.clearResults();
-h5gg.searchNumber('4333543704410193920','I64','0x100000000','0x160000000');
-h5gg.searchNearby('0.01','F32','0x8');
-h5gg.searchNearby('0.0219~0.02975','F32','0x32');
-h5gg.searchNearby('0.1035~0.1070','F32','0x4');
-h5gg.searchNearby('2.802597e-45','F32','0x4');
-h5gg.searchNumber('0.1035~0.1070','F32','0x100000000','0x160000000');
-h5gg.editAll('1.875',"F32");
 
 alert("Magic Bullet On");
 
 }else{
-alert("Không thể tắt");
+
+alert("Chức Năng Này Ko Thể Tắt");
+
 }
+
 }
 
 function danthang(){
-if(window.h5gg){
-h5gg.clearResults();
-h5gg.searchNumber('1016018816','I32','0x100000000','0x160000000');
-h5gg.editAll('180','I32');
-}
-alert("NORECOIL ON");
+
+alert("ɴᴏʀᴇᴄᴏɪʟ ᴏɴ");
+
 }
 
 </script>
