@@ -44,14 +44,15 @@ body{
 
     background-size:400% 400%;
 
-    animation:rainbowMove 4s linear infinite;
+    animation:rainbowMove 3s linear infinite;
 
     box-shadow:
-    0 0 20px rgba(255,255,255,0.2),
-    0 0 40px rgba(0,0,0,0.5);
+    0 0 25px rgba(255,255,255,0.15),
+    0 0 50px rgba(0,0,0,0.6);
 }
 
 @keyframes rainbowMove{
+
     0%{
         background-position:0% 50%;
     }
@@ -59,11 +60,16 @@ body{
     100%{
         background-position:400% 50%;
     }
+
 }
 
-/* PANEL */
+/* LOGIN */
 
-.panel{
+#loginPage{
+    display:block;
+}
+
+.login-box{
     width:340px;
     background:#050505;
     border-radius:25px;
@@ -71,19 +77,12 @@ body{
     text-align:center;
 }
 
-/* TITLE */
-
 .title{
     color:white;
-    font-size:38px;
+    font-size:30px;
     font-weight:bold;
-    margin-bottom:30px;
-
-    text-shadow:
-    0 0 10px rgba(255,255,255,0.3);
+    margin-bottom:28px;
 }
-
-/* INPUT */
 
 input{
     width:100%;
@@ -102,14 +101,12 @@ input{
 
     padding:0 15px;
 
-    margin-bottom:20px;
+    margin-bottom:18px;
 }
 
 input::placeholder{
     color:#8f9bb3;
 }
-
-/* BUTTON */
 
 button{
     width:100%;
@@ -118,29 +115,89 @@ button{
     border:none;
     border-radius:15px;
 
-    background:#003cff;
-
     color:white;
 
-    font-size:24px;
+    font-size:22px;
     font-weight:bold;
 
     cursor:pointer;
+
+    margin-top:10px;
 
     transition:0.2s;
 }
 
 button:hover{
-    transform:scale(1.03);
-    background:#1f57ff;
+    transform:scale(1.02);
 }
 
-/* STATUS */
+.login-btn{
+    background:#003cff;
+}
+
+/* PANEL */
+
+#panel{
+    display:none;
+}
+
+.panel-box{
+    width:380px;
+    background:#050505;
+    border-radius:25px;
+    padding:30px;
+    text-align:center;
+}
+
+.panel-title{
+    color:white;
+    font-size:34px;
+    margin-bottom:25px;
+}
+
+/* BUTTON PANEL */
+
+.create{
+    background:#00c853;
+}
+
+.delete{
+    background:#ff1744;
+}
+
+.check{
+    background:linear-gradient(
+        90deg,
+        red,
+        orange,
+        yellow,
+        green,
+        cyan,
+        blue,
+        violet
+    );
+}
+
+/* RESULT */
+
+#result{
+    margin-top:20px;
+
+    background:#111827;
+
+    border-radius:15px;
+
+    padding:15px;
+
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+}
 
 #status{
-    margin-top:22px;
+    margin-top:18px;
     color:#bdbdbd;
-    font-size:20px;
+    font-size:18px;
     font-weight:bold;
 }
 
@@ -149,40 +206,105 @@ button:hover{
 
 <body>
 
+<!-- LOGIN -->
+
+<div id="loginPage">
+
 <div class="rainbow-border">
 
-    <div class="panel">
+<div class="login-box">
 
-        <div class="title">
-            @khangloveios
-        </div>
+<div class="title">
+@khangloveios
+</div>
 
-        <input
-        type="password"
-        id="keyInput"
-        placeholder="Nhập key admin">
+<input
+type="password"
+id="adminKey"
+placeholder="Nhập key admin">
 
-        <button onclick="login()">
-            ĐĂNG NHẬP
-        </button>
+<button
+type="button"
+class="login-btn"
+onclick="login()">
 
-        <div id="status">
-            Waiting...
-        </div>
+ĐĂNG NHẬP
 
-    </div>
+</button>
 
+<div id="status">
+Waiting...
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- PANEL -->
+
+<div id="panel">
+
+<div class="rainbow-border">
+
+<div class="panel-box">
+
+<div class="panel-title">
+DISCORD SYSTEM
+</div>
+
+<input
+type="text"
+id="key"
+placeholder="Nhập key">
+
+<button
+class="create"
+onclick="createKey()">
+
+CREATE KEY
+
+</button>
+
+<button
+class="delete"
+onclick="deleteKey()">
+
+DELETE KEY
+
+</button>
+
+<button
+class="check"
+onclick="checkKey()">
+
+CHECK KEY
+
+</button>
+
+<div id="result">
+Kết quả sẽ hiện ở đây
+</div>
+
+</div>
+</div>
 </div>
 
 <script>
 
+const api =
+"https://dicord-key-bot.onrender.com";
+
+/* LOGIN */
+
 function login(){
 
-    const key =
-    document.getElementById("keyInput")
-    .value;
+    let input =
+    document.getElementById("adminKey")
+    .value
+    .trim()
+    .toLowerCase();
 
-    if(key === "nhat khang"){
+    if(input === "nhat khang"){
 
         document.getElementById("status")
         .innerHTML =
@@ -190,16 +312,82 @@ function login(){
 
         setTimeout(()=>{
 
-    window.location.href =
-    "https://dicord-key-bot.onrender.com/index.html";
-},1000);
-        
+            document.getElementById("loginPage")
+            .style.display = "none";
+
+            document.getElementById("panel")
+            .style.display = "block";
+
+        },1000);
+
     }else{
 
         document.getElementById("status")
         .innerHTML =
         "<span style='color:red;'>❌ Sai key admin</span>";
+
     }
+
+}
+
+/* CREATE KEY */
+
+async function createKey(){
+
+    const key =
+    document.getElementById("key")
+    .value;
+
+    await fetch(`${api}/create/${key}`);
+
+    document.getElementById("result")
+    .innerHTML =
+    "✅ Đã tạo key: " + key;
+}
+
+/* DELETE KEY */
+
+async function deleteKey(){
+
+    const key =
+    document.getElementById("key")
+    .value;
+
+    await fetch(`${api}/delete/${key}`);
+
+    document.getElementById("result")
+    .innerHTML =
+    "🗑️ Đã xóa key: " + key;
+}
+
+/* CHECK KEY */
+
+async function checkKey(){
+
+    const key =
+    document.getElementById("key")
+    .value;
+
+    const res =
+    await fetch(`${api}/check/${key}`);
+
+    const data =
+    await res.json();
+
+    if(data.success){
+
+        document.getElementById("result")
+        .innerHTML =
+        "✅ Key hợp lệ";
+
+    }else{
+
+        document.getElementById("result")
+        .innerHTML =
+        "❌ Key không hợp lệ";
+
+    }
+
 }
 
 </script>
