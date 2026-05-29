@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>@khangloveios</title>
 
 <style>
@@ -15,7 +16,7 @@
 }
 
 body{
-    background:#08112b;
+    background:#08122b;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -41,28 +42,29 @@ body{
         red
     );
 
-    background-size:400%;
-    animation:rainbow 4s linear infinite;
+    background-size:400% 400%;
+
+    animation:rainbowMove 4s linear infinite;
 
     box-shadow:
     0 0 20px rgba(255,255,255,0.2),
-    0 0 40px rgba(0,255,255,0.2);
+    0 0 40px rgba(0,0,0,0.5);
 }
 
-@keyframes rainbow{
+@keyframes rainbowMove{
     0%{
-        background-position:0%;
+        background-position:0% 50%;
     }
 
     100%{
-        background-position:400%;
+        background-position:400% 50%;
     }
 }
 
-/* BOX */
+/* PANEL */
 
-.login-box{
-    width:350px;
+.panel{
+    width:340px;
     background:#050505;
     border-radius:25px;
     padding:35px 25px;
@@ -71,32 +73,36 @@ body{
 
 /* TITLE */
 
-.login-box h1{
+.title{
     color:white;
-    font-size:48px;
-    margin-bottom:35px;
+    font-size:38px;
     font-weight:bold;
+    margin-bottom:30px;
+
+    text-shadow:
+    0 0 10px rgba(255,255,255,0.3);
 }
 
 /* INPUT */
 
 input{
     width:100%;
-    height:58px;
+    height:55px;
 
     border:none;
     outline:none;
 
-    border-radius:16px;
+    border-radius:15px;
 
-    padding:0 18px;
+    background:#1b2946;
+
+    color:white;
 
     font-size:18px;
 
-    background:#1e2a47;
-    color:white;
+    padding:0 15px;
 
-    margin-bottom:22px;
+    margin-bottom:20px;
 }
 
 input::placeholder{
@@ -107,15 +113,16 @@ input::placeholder{
 
 button{
     width:100%;
-    height:58px;
+    height:55px;
 
     border:none;
-    border-radius:16px;
+    border-radius:15px;
 
     background:#003cff;
 
     color:white;
-    font-size:28px;
+
+    font-size:24px;
     font-weight:bold;
 
     cursor:pointer;
@@ -124,86 +131,17 @@ button{
 }
 
 button:hover{
-    transform:scale(1.02);
-    background:#004dff;
+    transform:scale(1.03);
+    background:#1f57ff;
 }
 
 /* STATUS */
 
 #status{
-    margin-top:25px;
-    color:#9ca3af;
-    font-size:22px;
-    font-weight:bold;
-}
-
-/* PANEL */
-
-#panel{
-    display:none;
-}
-
-.panel-box{
-    width:380px;
-    background:#050505;
-    border-radius:25px;
-    padding:30px;
-    text-align:center;
-}
-
-.panel-box h2{
-    color:white;
-    font-size:40px;
-    margin-bottom:25px;
-}
-
-.menu-btn{
-    width:100%;
-    height:55px;
-    margin-top:14px;
-
-    border:none;
-    border-radius:14px;
-
-    color:white;
-    font-size:22px;
-    font-weight:bold;
-}
-
-/* BUTTON COLORS */
-
-.create{
-    background:#00c853;
-}
-
-.delete{
-    background:#ff1744;
-}
-
-.check{
-    background:linear-gradient(
-        90deg,
-        red,
-        orange,
-        yellow,
-        green,
-        cyan,
-        blue,
-        violet
-    );
-}
-
-.result{
-    margin-top:20px;
-
-    background:#111827;
-
-    border-radius:14px;
-
-    padding:18px;
-
-    color:white;
+    margin-top:22px;
+    color:#bdbdbd;
     font-size:20px;
+    font-weight:bold;
 }
 
 </style>
@@ -211,161 +149,57 @@ button:hover{
 
 <body>
 
-<!-- LOGIN -->
-
-<div id="login">
-
 <div class="rainbow-border">
 
-<div class="login-box">
+    <div class="panel">
 
-<h1>@khangloveios</h1>
+        <div class="title">
+            @khangloveios
+        </div>
 
-<input
-type="password"
-id="adminKey"
-placeholder="Nhập key admin"
-/>
+        <input
+        type="password"
+        id="keyInput"
+        placeholder="Nhập key admin">
 
-<button onclick="login()">
-ĐĂNG NHẬP
-</button>
+        <button onclick="login()">
+            ĐĂNG NHẬP
+        </button>
 
-<div id="status">
-Waiting...
-</div>
+        <div id="status">
+            Waiting...
+        </div>
 
-</div>
-</div>
-</div>
+    </div>
 
-<!-- PANEL -->
-
-<div id="panel">
-
-<div class="rainbow-border">
-
-<div class="panel-box">
-
-<h2>ADMIN PANEL</h2>
-
-<input
-type="text"
-id="key"
-placeholder="Nhập key"
-/>
-
-<button class="menu-btn create" onclick="createKey()">
-CREATE KEY
-</button>
-
-<button class="menu-btn delete" onclick="deleteKey()">
-DELETE KEY
-</button>
-
-<button class="menu-btn check" onclick="checkKey()">
-CHECK KEY
-</button>
-
-<div class="result" id="result">
-Kết quả sẽ hiện ở đây
-</div>
-
-</div>
-</div>
 </div>
 
 <script>
 
-const api = "https://dicord-key-bot.onrender.com";
-
-/* LOGIN */
-
 function login(){
 
     const key =
-    document.getElementById("adminKey")
+    document.getElementById("keyInput")
     .value;
 
     if(key === "nhat khang"){
 
         document.getElementById("status")
         .innerHTML =
-        "✅ Đăng nhập thành công";
+        "<span style='color:#00ff66;'>✅ Đăng nhập thành công</span>";
 
         setTimeout(()=>{
 
-            document.getElementById("login")
-            .style.display = "none";
+            window.location.href =
+            "https://khangloveios.com";
 
-            document.getElementById("panel")
-            .style.display = "block";
-
-        },800);
+        },1000);
 
     }else{
 
         document.getElementById("status")
         .innerHTML =
-        "❌ Sai key admin";
-    }
-}
-
-/* CREATE KEY */
-
-async function createKey(){
-
-    const key =
-    document.getElementById("key")
-    .value;
-
-    await fetch(`${api}/create/${key}`);
-
-    document.getElementById("result")
-    .innerHTML =
-    "✅ Đã tạo key: " + key;
-}
-
-/* DELETE KEY */
-
-async function deleteKey(){
-
-    const key =
-    document.getElementById("key")
-    .value;
-
-    await fetch(`${api}/delete/${key}`);
-
-    document.getElementById("result")
-    .innerHTML =
-    "🗑️ Đã xóa key: " + key;
-}
-
-/* CHECK KEY */
-
-async function checkKey(){
-
-    const key =
-    document.getElementById("key")
-    .value;
-
-    const res =
-    await fetch(`${api}/check/${key}`);
-
-    const data =
-    await res.json();
-
-    if(data.success){
-
-        document.getElementById("result")
-        .innerHTML =
-        "✅ Key hợp lệ";
-
-    }else{
-
-        document.getElementById("result")
-        .innerHTML =
-        "❌ Key không hợp lệ";
+        "<span style='color:red;'>❌ Sai key admin</span>";
     }
 }
 
