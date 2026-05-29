@@ -83,6 +83,9 @@ button:hover{
 </style>
 </head>
 <script>
+<button onclick="createKey()">CREATE KEY</button>
+
+<script>
 const api = "https://discord-key-bot.onrender.com";
 
 async function createKey() {
@@ -102,12 +105,10 @@ async function checkKey() {
 
     alert(data.message);
 }
-
-document.querySelectorAll("button")[0].onclick = createKey;
-document.querySelectorAll("button")[3].onclick = checkKey;
 </script>
-<body>
 
+</body>
+    
 <div class="panel">
 
 <h1>discord system</h1>
