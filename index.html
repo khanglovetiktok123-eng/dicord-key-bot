@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Discord System</title>
+<title>Discord Key System</title>
 
 <style>
 
@@ -17,28 +16,24 @@
 
 body{
     background:#0f172a;
-    color:white;
     display:flex;
     justify-content:center;
     align-items:center;
     min-height:100vh;
-    padding:20px;
+    color:white;
 }
 
 .panel{
-    width:100%;
-    max-width:450px;
+    width:400px;
     background:#1e293b;
-    border-radius:20px;
     padding:25px;
-    box-shadow:0 0 20px rgba(0,0,0,0.5);
+    border-radius:20px;
 }
 
 h1{
     text-align:center;
     margin-bottom:20px;
     color:#38bdf8;
-    font-size:42px;
 }
 
 input{
@@ -46,10 +41,9 @@ input{
     padding:14px;
     border:none;
     border-radius:12px;
-    margin-top:10px;
     background:#334155;
     color:white;
-    font-size:16px;
+    margin-bottom:10px;
 }
 
 button{
@@ -61,7 +55,6 @@ button{
     font-size:16px;
     font-weight:bold;
     cursor:pointer;
-    transition:0.2s;
 }
 
 /* BAN */
@@ -71,10 +64,6 @@ button{
     color:white;
 }
 
-.ban:hover{
-    background:#222;
-}
-
 /* DELETE */
 
 .delete{
@@ -82,19 +71,11 @@ button{
     color:white;
 }
 
-.delete:hover{
-    background:#cc0000;
-}
-
 /* CREATE */
 
 .create{
     background:#00cc66;
     color:white;
-}
-
-.create:hover{
-    background:#00aa55;
 }
 
 /* CHECK */
@@ -113,20 +94,11 @@ button{
     color:white;
 }
 
-.result{
+#result{
     margin-top:20px;
     background:#0f172a;
     padding:15px;
     border-radius:12px;
-    min-height:60px;
-    font-size:15px;
-}
-
-.key{
-    background:#334155;
-    padding:10px;
-    border-radius:10px;
-    margin-top:10px;
 }
 
 </style>
@@ -136,7 +108,7 @@ button{
 
 <div class="panel">
 
-<h1>discord system</h1>
+<h1>Discord System</h1>
 
 <input type="text" id="key" placeholder="Nhập key">
 
@@ -156,8 +128,8 @@ CREATE KEY
 CHECK KEY
 </button>
 
-<div class="result" id="result">
-Danh sách key sẽ hiện ở đây
+<div id="result">
+Kết quả sẽ hiện ở đây
 </div>
 
 </div>
@@ -172,16 +144,12 @@ async function createKey(){
 
     const key = document.getElementById("key").value;
 
-    if(!key){
-        return alert("Nhập key");
-    }
-
     const res = await fetch(`${api}/create/${key}`);
 
     const data = await res.json();
 
     document.getElementById("result").innerHTML =
-    "✅ " + data.message;
+    data.message;
 }
 
 /* DELETE */
@@ -190,16 +158,12 @@ async function deleteKey(){
 
     const key = document.getElementById("key").value;
 
-    if(!key){
-        return alert("Nhập key");
-    }
-
     const res = await fetch(`${api}/delete/${key}`);
 
     const data = await res.json();
 
     document.getElementById("result").innerHTML =
-    "🗑️ " + data.message;
+    data.message;
 }
 
 /* BAN */
@@ -208,16 +172,12 @@ async function banKey(){
 
     const key = document.getElementById("key").value;
 
-    if(!key){
-        return alert("Nhập key");
-    }
-
     const res = await fetch(`${api}/ban/${key}`);
 
     const data = await res.json();
 
     document.getElementById("result").innerHTML =
-    "⛔ " + data.message;
+    data.message;
 }
 
 /* CHECK */
@@ -226,25 +186,12 @@ async function checkKey(){
 
     const key = document.getElementById("key").value;
 
-    if(!key){
-        return alert("Nhập key");
-    }
-
     const res = await fetch(`${api}/check/${key}`);
 
     const data = await res.json();
 
-    if(data.success){
-
-        document.getElementById("result").innerHTML =
-        "✅ Key hợp lệ";
-
-    }else{
-
-        document.getElementById("result").innerHTML =
-        "❌ Key không hợp lệ";
-
-    }
+    document.getElementById("result").innerHTML =
+    data.message;
 }
 
 </script>
