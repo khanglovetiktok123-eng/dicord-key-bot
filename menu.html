@@ -7,6 +7,7 @@
 <title>@khangloveios</title>
 
 <style>
+
 :root{
 --menu-width:400px;
 }
@@ -23,7 +24,7 @@ background:transparent;
 overflow:hidden;
 }
 
-/* TAB */
+/* FLOATING TAB */
 
 #floatingTab{
 width:85px;
@@ -241,7 +242,7 @@ font-weight:bold;
 cursor:pointer;
 }
 
-/* KEY */
+/* LOGIN KEY */
 
 #keyBox{
 position:fixed;
@@ -330,20 +331,27 @@ cursor:pointer;
 margin-top:15px;
 font-weight:bold;
 }
+
+/* HIDE MENU */
+
+.hidden{
+display:none;
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- KEY -->
+<!-- KEY LOGIN -->
 
 <div id="keyBox">
 
 <div class="key-container">
 
-<h1>nhat khang ios</h1>
+<h1>NHAT KHANG IOS</h1>
 
-<p>vui lòng nhập key dis</p>
+<p>Nhập key Discord để mở menu</p>
 
 <input
 type="password"
@@ -364,7 +372,7 @@ VERIFY
 
 <!-- FLOAT -->
 
-<div id="floatingTab">
+<div id="floatingTab" class="hidden">
 <img src="https://hanaminikata.com/image/1502088830084190238/e4e0f0b6f6e73a75.webp">
 </div>
 
@@ -476,7 +484,7 @@ M1887 LV7
 <!-- INFO -->
 
 <div id="info" class="tab-content">
-Discord Key System
+Discord Key System Active
 </div>
 
 </div>
@@ -575,7 +583,9 @@ async function loadKeys(){
 
 try{
 
-const res=await fetch("/keys");
+const res=await fetch(
+"https://dicord-key-bot.onrender.com/keys"
+);
 
 validKeys=await res.json();
 
@@ -596,7 +606,7 @@ function checkKey(){
 let input=
 document.getElementById("keyInput").value;
 
-if(validKeys.includes(input)){
+if(validKeys.includes(input.trim())){
 
 document.getElementById("status").innerHTML=
 "<span style='color:#00ff55;'>KEY HỢP LỆ</span>";
@@ -605,6 +615,9 @@ setTimeout(()=>{
 
 document.getElementById("keyBox")
 .style.display="none";
+
+document.getElementById("floatingTab")
+.classList.remove("hidden");
 
 },700);
 
