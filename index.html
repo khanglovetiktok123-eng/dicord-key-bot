@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nhat Khang System</title>
     <style>
-        body { margin: 0; font-family: -apple-system, sans-serif; background: #f4f7f6; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        body { margin: 0; font-family: -apple-system, sans-serif; background: #ffffff; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
         .hidden { display: none; }
         .wrapper { width: 100%; max-width: 350px; padding: 20px; }
         
@@ -66,9 +66,8 @@
     </div>
 
     <script>
-    const API_URL = "https://dicord-key-bot.onrender.com";
-
-        function showScreen(num) {
+      
+       function showScreen(num) {
             document.getElementById('screen1').classList.add('hidden');
             document.getElementById('screen2').classList.add('hidden');
             document.getElementById('screen3').classList.add('hidden');
@@ -96,29 +95,69 @@
         }
 
         // Logic Key
-        function renderKeys() {
-            const keys = JSON.parse(localStorage.getItem('myKeys') || '[]');
-            document.getElementById('keyList').innerHTML = keys.map(k => `<li class="key-item"><strong>${k.name}</strong> <span>${k.type}</span></li>`).join('');
-        }
-        function createKey() {
-            const name = document.getElementById('keyName').value;
-            if (!name) return alert("Nhập tên key!");
-            let keys = JSON.parse(localStorage.getItem('myKeys') || '[]');
-            keys.push({name, type: document.getElementById('keyType').value});
-            localStorage.setItem('myKeys', JSON.stringify(keys));
-            renderKeys();
-        }
-        function deleteKey() {
-            const name = document.getElementById('keyName').value;
-            let keys = JSON.parse(localStorage.getItem('myKeys') || '[]').filter(k => k.name !== name);
-            localStorage.setItem('myKeys', JSON.stringify(keys));
-            renderKeys();
-        }
-        function checkKey() {
-            const name = document.getElementById('keyName').value;
-            const keys = JSON.parse(localStorage.getItem('myKeys') || '[]');
-            alert(keys.find(k => k.name === name) ? "Key tồn tại" : "Key không tồn tại");
-        }
+        async function renderKeys() {
+
+    const res = await fetch(
+        "https://dicord-key-bot.onrender.com/keys"
+    );
+
+    const keys = await res.json();
+
+    document.getElementById('keyList').innerHTML =
+    keys.map(k =>
+        `<li class="key-item">
+            <strong>${k.key}</strong>
+        </li>`
+    ).join('');
+}
+        async function createKey(){
+
+    const name =
+    document.getElementById("keyName").value;
+
+    await fetch(
+        `https://dicord-key-bot.onrender.com/create/${name}`
+    );
+
+    renderKeys();
+}
+        async function deleteKey(){
+
+    const name =
+    document.getElementById("keyName").value;
+
+    await fetch(
+        `https://dicord-key-bot.onrender.com/delete/${name}`
+    );
+
+    renderKeys();
+}
+        async function checkKey() {
+
+    const name =
+    document.getElementById("keyName").value.trim();
+
+    if (!name) {
+        alert("nhập key");
+        return;
+    }
+
+    const res = await fetch(
+        `https://dicord-key-bot.onrender.com/check/${encodeURIComponent(name)}`
+    );
+
+    const data = await res.json();
+
+    if (data.success) {
+
+        alert("key tồn tại");
+
+    } else {
+
+        alert("key không tồn tại");
+
+    }
+}
     </script>
 </body>
 </html>
